@@ -12,7 +12,6 @@ pipeline {
         stage('run python') {
             steps {
                 script {
-                    if (Boolean.valueOf(env.UNIX)) {
                         sh 'python 1.py'
                 }
             }
