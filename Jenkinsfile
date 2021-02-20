@@ -6,13 +6,14 @@ pipeline {
                 script {
                     properties([pipelineTriggers([pollSCM('* * * * *')])])
                 }
-                git 'https://github.com/Dgotlieb/JenkinsTest.git'
+                git 'https://github.com/pninitd/devops_project.git'
             }
         }
         stage('run python') {
             steps {
                 script {
-                        sh 'python 1.py'
+//                  sh 'python1.py'
+                    echo "pninit"
                 }
             }
         }
