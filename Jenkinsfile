@@ -3,7 +3,16 @@ pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '5'))
     }
-    stage('install missing dependencies') {
+    stages {
+        stage('checkout') {
+            steps {
+                script {
+                    properties([pipelineTriggers([pollSCM('*/30 * * * *')])])
+                }
+                git 'https://github.com/pninitd/devops_project.git'
+            }
+        }
+         stage('install missing dependencies') {
             steps {
                 script {
                     if (isUnix()) {
@@ -12,15 +21,6 @@ pipeline {
                         bat 'pip install flask werkzeug requests selenium pymysql -t ./'
                     }
                 }
-            }
-        }
-    stages {
-        stage('checkout') {
-            steps {
-                script {
-                    properties([pipelineTriggers([pollSCM('*/30 * * * *')])])
-                }
-                git 'https://github.com/pninitd/devops_project.git'
             }
         }
         stage('run backend server') {
