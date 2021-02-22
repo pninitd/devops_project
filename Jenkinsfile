@@ -25,63 +25,53 @@ pipeline {
         }
         stage('run backend server') {
             steps {
-                script { if (isUnix()) {
-                        sh 'nohup python rest_app.py &'
-                    } else {
-                        bat 'start /min python rest_app.py'
-                    }
+                script {
+                    runPythonFile('rest_app.py')
                 }
             }
         }
         stage('run frontend server') {
             steps {
-                script { if (isUnix()) {
-                        sh 'nohup python web_app.py &'
-                    } else {
-                        bat 'start /min python web_app.py'
-                    }
+                script {
+                    runPythonFile('web_app.py')
                 }
             }
         }
         stage('run backend testing') {
             steps {
-                script { if (isUnix()) {
-                        sh 'nohup python backend_testing.py &'
-                    } else {
-                        bat 'start /min backend_testing.py'
-                    }
+                script {
+                    runPythonFile('backend_testing.py')
                 }
             }
         }
         stage('run frontend testing') {
             steps {
-                script { if (isUnix()) {
-                        sh 'nohup python frontend_testing.py &'
-                    } else {
-                        bat 'start /min frontend_testing.py'
-                    }
+                script {
+                    runPythonFile('frontend_testing.py')
                 }
             }
         }
         stage('run combined testing.') {
             steps {
-                script { if (isUnix()) {
-                        sh 'nohup python combined_testing.py &'
-                    } else {
-                        bat 'start /min combined_testing.py'
-                    }
+                script {
+                    runPythonFile('combined_testing.py')
                 }
             }
         }
         stage('run clean environment') {
             steps {
-                script { if (isUnix()) {
-                        sh 'nohup python clean_environment.py &'
-                    } else {
-                        bat 'start /min clean_environment.py'
-                    }
+                script {
+                    runPythonFile('clean_environment.py')
                 }
             }
         }
+    }
+}
+
+def runPythonFile(pyfilename){
+    if (isUnix()) {
+        sh "nohup python ${pyfilename} &"
+    } else {
+        bat "start /min ${pyfilename}"
     }
 }
