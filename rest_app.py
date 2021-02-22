@@ -89,8 +89,13 @@ def user(user_id):
 
 @app.route('/stop_server')
 def stop_server():
-    os.kill(os.getpid(), signal.CTRL_C_EVENT)
-    return 'Rest app Server stopped'
+    print('Stopping rest app Server')
+    try:
+        os.kill(os.getpid(), signal.CTRL_C_EVENT)
+    except Exception as e:
+        os.kill(os.getpid(), signal.SIGINT)
+    finally:
+        return 'Rest app Server stopped'
 
 
 app.run(host='127.0.0.1', debug=True, port=5000)

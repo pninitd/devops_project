@@ -19,7 +19,8 @@ def get_user_name(user_id):
             # check no error returned from backend
             return "<H1 id='user'>" + user_name + "</H1>", 200
         else:
-            return "<H1 id='error'> error getting results from db </H1>", 500
+            # return "<H1 id='error'> error getting results from db </H1>", 500
+            handle_500('error')
     else:
         return "<H1 id='error'> no such user: " + user_id + "</H1>", 500
 
@@ -52,13 +53,18 @@ def handle_exception(e):
 
 @app.errorhandler(InternalServerError)
 def handle_500(e):
-    return "<H1 id='error'> error getting results from db </H1>", 500
+    return "<H1 id='error'> error getting results from db pp </H1>", 500
 
 
 @app.route('/stop_server')
 def stop_server():
-    os.kill(os.getpid(), signal.CTRL_C_EVENT)
-    return 'Web Server stopped'
+    print('Stopping Web Server')
+    try:
+        os.kill(os.getpid(), signal.CTRL_C_EVENT)
+    except Exception as e:
+        os.kill(os.getpid(), signal.SIGINT)
+    finally:
+        return 'Web Server stopped'
 
 
 app.run(host='127.0.0.1', debug=True, port=5001)
