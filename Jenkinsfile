@@ -70,6 +70,7 @@ pipeline {
 }
 
 def runPythonFile(pyfilename){
+// run python file, used for the testing files and fail the build in case of error
 	try{
 		if (isUnix()) {
 			sh "python ${pyfilename}"
@@ -78,10 +79,12 @@ def runPythonFile(pyfilename){
 		}
 	} catch (Throwable e) {
 		echo "Caught in runPythonFile for ${pyfilename}, ${e.toString()}"
+		currentBuild.result = "FAILURE"
 	}
 }
 
 def runPythonFileBackground(pyfilename){
+// run python file in the background, used for the apps
 	try{
 		if (isUnix()) {
 			sh "nohup python ${pyfilename} &"

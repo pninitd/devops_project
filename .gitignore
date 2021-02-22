@@ -1,2 +1,2 @@
-#venv/
-drivers/
+venv/
+.idea
