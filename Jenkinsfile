@@ -35,7 +35,7 @@ pipeline {
         stage('run backend testing.py') {
             steps {
                 script { if (isUnix()) {
-                        sh 'nohup python backend_testing.pyy &'
+                        sh 'nohup python backend_testing.py &'
                     } else {
                         bat 'start /min backend_testing.py'
                     }
@@ -45,7 +45,7 @@ pipeline {
         stage('run frontend testing.py') {
             steps {
                 script { if (isUnix()) {
-                        sh 'nohup python frontend_testing.pyy &'
+                        sh 'nohup python frontend_testing.py &'
                     } else {
                         bat 'start /min frontend_testing.py'
                     }
@@ -55,7 +55,7 @@ pipeline {
         stage('run combined testing.py') {
             steps {
                 script { if (isUnix()) {
-                        sh 'nohup python combined_testing.pyy &'
+                        sh 'nohup python combined_testing.py &'
                     } else {
                         bat 'start /min combined_testing.py'
                     }
@@ -65,7 +65,7 @@ pipeline {
         stage('run clean environment.py') {
             steps {
                 script { if (isUnix()) {
-                        sh 'nohup python clean_environment.pyy &'
+                        sh 'nohup python clean_environment.py &'
                     } else {
                         bat 'start /min clean_environment.py'
                     }
