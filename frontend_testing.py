@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, WebDriverException
+from clean_environment import clean_test_user
 
 # The frontend test will:
 # 1. Start a Selenium Webdriver session.
@@ -39,6 +40,7 @@ def main():
     success = frontend_test(user_id, user_name)
     if success:
         print('Test finished successfully')
+        clean_test_user()
     else:
         raise Exception("test failed")
 

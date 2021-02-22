@@ -1,4 +1,6 @@
 import requests
+
+from clean_environment import clean_test_user
 from db_connector import get_user_name_by_id
 
 # This backend test will:
@@ -68,6 +70,9 @@ def main():
 
             # 3. check directly in DB that we have the new user
             check_user_in_db(user_id, user_name)
+
+            # 4. clean test user
+            clean_test_user()
         else:
             raise Exception("test failed")
     finally:
