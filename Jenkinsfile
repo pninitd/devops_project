@@ -79,6 +79,7 @@ def runPythonFile(pyfilename){
 		}
 	} catch (Throwable e) {
 		echo "Caught in runPythonFile for ${pyfilename}, ${e.toString()}"
+		// mark the job as failed
 		currentBuild.result = "FAILURE"
 	}
 }
