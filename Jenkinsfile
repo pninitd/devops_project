@@ -77,7 +77,7 @@ def runPythonFile(pyfilename){
 			bat "python ${pyfilename} "
 		}
 	} catch (Throwable e) {
-		echo "Caught in runPythonFile ${e.toString()}"
+		echo "Caught in runPythonFile for ${pyfilename}, ${e.toString()}"
 	}
 }
 
@@ -90,6 +90,6 @@ def runPythonFileBackground(pyfilename){
 		}
 	}
 	catch (Throwable e) {
-		echo "Caught in runPythonFileBackground ${e.toString()}"
+		echo "Caught in runPythonFileBackground for ${pyfilename} ${e.toString()}"
 	}
 }
