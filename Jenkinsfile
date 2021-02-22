@@ -48,7 +48,7 @@ pipeline {
         stage('run frontend testing') {
             steps {
                 script {
-                    runPythonFile('frontend_testing.py')
+                    runPythonFile('frontend_testing.py test')
                 }
             }
         }
