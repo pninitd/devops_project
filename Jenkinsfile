@@ -3,6 +3,17 @@ pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '5'))
     }
+    stage('install missing dependencies') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'pip install flask werkzeug requests selenium pymysql -t ./'
+                    } else {
+                        bat 'pip install flask werkzeug requests selenium pymysql -t ./'
+                    }
+                }
+            }
+        }
     stages {
         stage('checkout') {
             steps {
@@ -32,7 +43,7 @@ pipeline {
                 }
             }
         }
-        stage('run backend testing.py') {
+        stage('run backend testing') {
             steps {
                 script { if (isUnix()) {
                         sh 'nohup python backend_testing.py &'
@@ -42,7 +53,7 @@ pipeline {
                 }
             }
         }
-        stage('run frontend testing.py') {
+        stage('run frontend testing') {
             steps {
                 script { if (isUnix()) {
                         sh 'nohup python frontend_testing.py &'
@@ -52,7 +63,7 @@ pipeline {
                 }
             }
         }
-        stage('run combined testing.py') {
+        stage('run combined testing.') {
             steps {
                 script { if (isUnix()) {
                         sh 'nohup python combined_testing.py &'
@@ -62,7 +73,7 @@ pipeline {
                 }
             }
         }
-        stage('run clean environment.py') {
+        stage('run clean environment') {
             steps {
                 script { if (isUnix()) {
                         sh 'nohup python clean_environment.py &'

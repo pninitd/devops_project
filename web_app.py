@@ -53,7 +53,7 @@ def handle_exception(e):
 
 @app.errorhandler(InternalServerError)
 def handle_500(e):
-    return "<H1 id='error'> error getting results from db pp </H1>", 500
+    return "<H1 id='error'> error getting results from db </H1>", 500
 
 
 @app.route('/stop_server')
