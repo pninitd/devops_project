@@ -9,7 +9,8 @@ pipeline {
                 script {
                     properties([pipelineTriggers([pollSCM('*/30 * * * *')])])
                 }
-                git 'https://github.com/pninitd/devops_project.git'
+//                 checkout from the url that defined in the jenkins job (git 'https://github.com/pninitd/devops_project.git')
+                   checkout scm
             }
         }
          stage('install missing dependencies') {
@@ -26,14 +27,14 @@ pipeline {
         stage('run backend server') {
             steps {
                 script {
-                    runPythonFile('rest_app.py')
+                    runPythonFileBackground('rest_app.py')
                 }
             }
         }
         stage('run frontend server') {
             steps {
                 script {
-                    runPythonFile('web_app.py')
+                    runPythonFileBackground('web_app.py')
                 }
             }
         }
@@ -69,9 +70,19 @@ pipeline {
 }
 
 def runPythonFile(pyfilename){
+
+    if (isUnix()) {
+        sh "python ${pyfilename} &"
+    } else {
+        bat "python ${pyfilename} "
+    }
+}
+
+def runPythonFileBackground(pyfilename){
+
     if (isUnix()) {
         sh "nohup python ${pyfilename} &"
     } else {
-        bat "start /min ${pyfilename} "
+        bat "start /min python ${pyfilename} "
     }
 }
