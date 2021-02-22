@@ -50,7 +50,7 @@ def combined_testing(mode=None):
 
 if __name__ == "__main__":
     # get input params from outside, used by jenkins
-    if len(argv) >= 1:
+    if len(argv) >= 2:
         if (argv[1] == "test"):
             combined_testing('TEST')
             clean_test_user()

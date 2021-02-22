@@ -1,3 +1,5 @@
+from sys import argv
+
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, WebDriverException
 from clean_environment import clean_test_user
@@ -34,16 +36,26 @@ def frontend_test(user_id, expected_name):
         return status
 
 
-def main():
+def main(mode=None):
     user_id = 666
     user_name = 'TEST user'
+
+    if mode != 'TEST':
+        user_id = 1
+        user_name = 'pninit'
+
     success = frontend_test(user_id, user_name)
     if success:
         print('Test finished successfully')
-        clean_test_user()
     else:
         raise Exception("test failed")
 
 
 if __name__ == '__main__':
-    main()
+    if len(argv) >= 2:
+        # get input params from outside, used by jenkins
+        if (argv[1] == "test"):
+            main('TEST')
+            clean_test_user()
+    else:
+        main()
