@@ -56,6 +56,6 @@ if __name__ == '__main__':
         # get input params from outside, used by jenkins
         if (argv[1] == "test"):
             main('TEST')
-            clean_test_user()
+            # clean_test_user()
     else:
         main()

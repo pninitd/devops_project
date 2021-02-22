@@ -48,7 +48,7 @@ pipeline {
 		stage('run frontend testing') {
 			steps {
 				script {
-					runPythonFile('frontend_testing.py test')
+					runPythonFile('frontend_testing.py')
 				}
 			}
 		}
@@ -74,7 +74,7 @@ def runPythonFile(pyfilename){
 		if (isUnix()) {
 			sh "python ${pyfilename}"
 		} else {
-			bat "python ${pyfilename} "
+			bat "python ${pyfilename}"
 		}
 	} catch (Throwable e) {
 		echo "Caught in runPythonFile for ${pyfilename}, ${e.toString()}"
@@ -86,7 +86,7 @@ def runPythonFileBackground(pyfilename){
 		if (isUnix()) {
 			sh "nohup python ${pyfilename} &"
 		} else {
-			bat "start /min python ${pyfilename} "
+			bat "start /min python ${pyfilename}"
 		}
 	}
 	catch (Throwable e) {
