@@ -67,6 +67,13 @@ pipeline {
 			}
 		}
 	}
+	post {
+	    failure {
+	        mail bcc: '', body: '''Jenkins-${JOB_NAME}-${BUILD_NUMBER} FAILED
+            Check what is the issue: $env.JOB_URL
+            ''', cc: '', from: 'Jenkins', replyTo: 'no-reply@pninit.com', subject: 'Jenkins-${JOB_NAME}-${BUILD_NUMBER} FAILED', to: 'pninit.dvir@gmail.com'
+	    }
+	}
 }
 
 def runPythonFile(pyfilename){
