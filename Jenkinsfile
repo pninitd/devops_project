@@ -54,7 +54,7 @@ pipeline {
         stage('run combined testing.') {
             steps {
                 script {
-                    runPythonFile('combined_testing.py')
+                    runPythonFile('combined_testing.py test')
                 }
             }
         }
@@ -72,6 +72,6 @@ def runPythonFile(pyfilename){
     if (isUnix()) {
         sh "nohup python ${pyfilename} &"
     } else {
-        bat "start /min ${pyfilename}"
+        bat "start /min ${pyfilename} "
     }
 }

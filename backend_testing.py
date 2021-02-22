@@ -56,8 +56,8 @@ def check_user_in_db(user_id, user_name):
 
 def main():
     # Test params:
-    user_id = 6
-    user_name = 'john'
+    user_id = 666
+    user_name = 'TEST user'
 
     try:
         # 1. create a new user

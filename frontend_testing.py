@@ -34,8 +34,8 @@ def frontend_test(user_id, expected_name):
 
 
 def main():
-    user_id = 1
-    user_name = 'pninit'
+    user_id = 666
+    user_name = 'TEST user'
     success = frontend_test(user_id, user_name)
     if success:
         print('Test finished successfully')
