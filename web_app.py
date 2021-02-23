@@ -62,7 +62,7 @@ def stop_server():
     try:
         os.kill(os.getpid(), signal.CTRL_C_EVENT)
     except Exception as e:
-        os.kill(os.getpid(), signal.SIGINT)
+        os.kill(os.getpid(), signal.SIGKILL)
     finally:
         return 'Web Server stopped'
 
