@@ -1,3 +1,5 @@
+from sys import argv
+
 import requests
 
 from clean_environment import clean_test_user
@@ -7,6 +9,7 @@ from db_connector import get_user_name_by_id
 # 1. Post a new user data to the REST API using POST method.
 # 2. Submit a GET request to make sure status code is 200 and data equals to the posted data.
 # 3. Check posted data was stored inside DB (users table).
+# 4. clean the new user for clean env. keep the user in case its running from jenkins with mode "test"
 
 
 def check_new_user_creation(user_id, user_name):
@@ -52,11 +55,11 @@ def check_user_in_db(user_id, user_name):
     user_name_from_db = get_user_name_by_id(user_id)
     if user_name_from_db != user_name or user_name_from_db == '':
         raise Exception("test failed")
-    print('new user %s returned from db' % user_name_from_db)
+    print('new user %s returned from db with id %s' % (user_name_from_db, user_id))
     return user_name_from_db
 
 
-def main():
+def main(mode=None):
     # Test params:
     user_id = 666
     user_name = 'TEST user'
@@ -71,8 +74,9 @@ def main():
             # 3. check directly in DB that we have the new user
             check_user_in_db(user_id, user_name)
 
-            # 4. clean test user
-            clean_test_user()
+            # 4. clean test user only if running independent to jenkins
+            if mode != 'TEST':
+                clean_test_user()
         else:
             raise Exception("test failed")
     finally:
@@ -80,4 +84,10 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    if len(argv) >= 2:
+        # get input params from outside, used by jenkins
+        if (argv[1] == "test"):
+            main('TEST')
+            # clean_test_user()
+    else:
+        main()

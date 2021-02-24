@@ -2,7 +2,6 @@ from sys import argv
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, WebDriverException
-from clean_environment import clean_test_user
 
 # The frontend test will:
 # 1. Start a Selenium Webdriver session.
@@ -56,6 +55,5 @@ if __name__ == '__main__':
         # get input params from outside, used by jenkins
         if (argv[1] == "test"):
             main('TEST')
-            # clean_test_user()
     else:
         main()

@@ -36,6 +36,7 @@ def handle_exception(e):
     return "<H1 id='error'> error getting results from db </H1>", 500
 
 
+# Extra: route error handler for non-existing routes
 @app.errorhandler(HTTPException)
 def handle_exception(e):
     """Return JSON instead of HTML for HTTP errors."""

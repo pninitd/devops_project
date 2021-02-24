@@ -10,6 +10,15 @@ def clean_test_user():
         print("Connection refused to rest_app service", e)
 
 
+def clean_specific_user(id):
+    # Delete specific user from the automation
+    try:
+        requests.delete('http://127.0.0.1:5000/users/%s' % id)
+        print("cleaned user %s" % id)
+    except requests.exceptions.ConnectionError as e:
+        print("Connection refused to rest_app service", e)
+
+
 def stop_rest_app():
     # Stop rest app service
     try:

@@ -41,14 +41,14 @@ pipeline {
 		stage('run backend testing') {
 			steps {
 				script {
-					runPythonFile('backend_testing.py')
+					runPythonFile('backend_testing.py test')
 				}
 			}
 		}
 		stage('run frontend testing') {
 			steps {
 				script {
-					runPythonFile('frontend_testing.py')
+					runPythonFile('frontend_testing.py test')
 				}
 			}
 		}

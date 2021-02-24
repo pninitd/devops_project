@@ -1,6 +1,7 @@
 from sys import argv
-
 from backend_testing import check_new_user_creation, check_user_in_db, check_get_user
+from clean_environment import clean_test_user
+from frontend_testing import frontend_test
 
 # The combined test will:
 # Post any new user data to the REST API using POST method.
@@ -11,9 +12,7 @@ from backend_testing import check_new_user_creation, check_user_in_db, check_get
 # Check that the user name is correct.
 
 # Any failure will throw an exception using the following code: raise Exception("test failed")
-from clean_environment import clean_test_user
-
-from frontend_testing import frontend_test
+# TODO: clean user at the end of the independent run
 
 
 def combined_testing(mode=None):
@@ -52,7 +51,12 @@ if __name__ == "__main__":
     # get input params from outside, used by jenkins
     if len(argv) >= 2:
         if (argv[1] == "test"):
+            # clean environment in case there are left overs from previous runs
+            clean_test_user()
+            # run test in "TEST" mode
             combined_testing('TEST')
+            # clean env
             clean_test_user()
     else:
+        # run test independent to jenkins automation, get data from user
         combined_testing()
